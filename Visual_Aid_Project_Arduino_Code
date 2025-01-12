@@ -1,0 +1,50 @@
+// Pin Definitions
+const int frontSensorPin = 2;    // Front obstacle sensor (DOUT)
+const int leftSensorPin = 3;     // Left obstacle sensor (DOUT)
+const int rightSensorPin = 4;    // Right obstacle sensor (DOUT)
+const int buzzerPin = 5;         // Buzzer pin
+
+void setup() {
+  // Initialize the sensor pins as INPUT
+  pinMode(frontSensorPi
+  
+  
+  n, INPUT);
+  pinMode(leftSensorPin, INPUT);
+  pinMode(rightSensorPin, INPUT);
+  
+  // Initialize the buzzer pin as OUTPUT
+  pinMode(buzzerPin, OUTPUT);
+}
+
+void loop() {
+  // Read sensor values
+  int frontSensor = digitalRead(frontSensorPin);  // Read the front sensor
+  int leftSensor = digitalRead(leftSensorPin);    // Read the left sensor
+  int rightSensor = digitalRead(rightSensorPin);  // Read the right sensor
+  
+  // Check if front sensor detects obstacle
+  if (frontSensor == HIGH) {  // HIGH means object detected
+    tone(buzzerPin, 1000);  // Play 1 kHz tone (continuous for front)
+  } 
+  // Checking if left sensor detects obstacle
+  else if (leftSensor == HIGH) {  // HIGH means object detected
+    tone(buzzerPin, 500);  // Play 500 Hz tone (short repeated beep for left)
+    delay(200);  // Short beep duration
+    noTone(buzzerPin);  // Stop sound
+    delay(200);  // Delay before next beep
+  }
+  // Checking if right sensor detects obstacle
+  else if (rightSensor == HIGH) {  // HIGH means object detected (since DOUT is usually active LOW)
+    tone(buzzerPin, 1500);  // Play 1.5 kHz tone (faster repeated beep for right)
+    delay(100);  // Short beep duration
+    noTone(buzzerPin);  // Stop sound
+    delay(100);  // Delay before next beep
+  } 
+  // If no obstacles detected
+  else {
+    noTone(buzzerPin);  // No sound when no obstacle
+  }
+
+  delay(100);  // Small delay to avoid rapid switching
+}
